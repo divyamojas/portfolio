@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from "react";
-import Loader from "react-loaders";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import Loader from 'react-loaders'
+import { Link } from 'react-router-dom'
 
-import LogoTitle from "../../assets/images/D-logo-32px.svg";
-import AnimatedLetters from "../AnimatedLetters";
-import "./index.scss";
-import Logo from "./Logo";
+import LogoTitle from '../../assets/images/D-logo-32px.svg'
+import AnimatedLetters from '../AnimatedLetters'
+import './index.scss'
+import Logo from './Logo'
 
 const Home = () => {
-  const [letterClass, setLetterClass] = useState("text-animate");
-  const nameArray = ["i", "v", "y", "a", "m"];
+  const [letterClass, setLetterClass] = useState('text-animate')
+  const nameArray = ['i', 'v', 'y', 'a', 'm']
   const jobArray = [
-    "w",
-    "e",
-    "b",
-    " ",
-    "d",
-    "e",
-    "v",
-    "e",
-    "l",
-    "o",
-    "p",
-    "e",
-    "r",
-    ".",
-  ];
+    'w',
+    'e',
+    'b',
+    ' ',
+    'd',
+    'e',
+    'v',
+    'e',
+    'l',
+    'o',
+    'p',
+    'e',
+    'r',
+    '.',
+  ]
 
   useEffect(() => {
     setTimeout(() => {
-      setLetterClass("text-animate-hover");
-    }, 4000);
-  }, []);
+      setLetterClass('text-animate-hover')
+    }, 4000)
+  }, [])
 
   return (
     <>
@@ -59,7 +59,11 @@ const Home = () => {
               idx={24}
             />
           </h1>
-          <h2>Frontend Developer / Javascript Expert</h2>
+          <h2>
+            Frontend / Backend / Javascript / <br /> Blockchain / Database /
+            Salesforce
+            {/* / UI/UX */}
+          </h2>
           <Link to="/contact" className="flat-button">
             CONTACT ME
           </Link>
@@ -68,7 +72,7 @@ const Home = () => {
       </div>
       <Loader type="pacman" />
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
