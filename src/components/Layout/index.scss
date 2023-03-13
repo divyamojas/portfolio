@@ -16,7 +16,7 @@
   bottom: 0;
   left: 120px;
   font-size: 18px;
-  font-family: "La Belle Aurore";
+  font-family: 'La Belle Aurore';
 }
 
 .top-tag-doctype {
@@ -45,7 +45,8 @@
 }
 
 .about-page,
-.contact-page {
+.contact-page,
+.projects-page {
   .text-zone {
     position: absolute;
     left: 10%;
@@ -59,7 +60,7 @@
 
   h1 {
     font-size: 53px;
-    font-family: "Coolvetica";
+    font-family: 'Coolvetica';
     color: #ffd700;
     font-weight: 400;
     margin-top: 0;
@@ -68,8 +69,8 @@
     left: 10px;
 
     &::before {
-      content: "<h1>";
-      font-family: "La Belle Aurore";
+      content: '<h1>';
+      font-family: 'La Belle Aurore';
       font-size: 18px;
       position: absolute;
       margin-top: -10px;
@@ -79,8 +80,8 @@
     }
 
     &:after {
-      content: "</h1>";
-      font-family: "La Belle Aurore";
+      content: '</h1>';
+      font-family: 'La Belle Aurore';
       font-size: 18px;
       line-height: 18px;
       position: absolute;
@@ -116,8 +117,9 @@
   }
 }
 
-// .contact-page {
-//   h1{
-//     margin-top: 60px ;
-//   }
-// }
+.projects-page {
+  .text-zone {
+    top: 20%;
+    margin-top: 95px;
+  }
+}
