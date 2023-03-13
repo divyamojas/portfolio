@@ -1,0 +1,133 @@
+import "./index.scss";
+// import LogoS from '../../../assets/images/logo-s.png'
+import { useRef } from "react";
+
+const Logo = () => {
+  const bgRef = useRef();
+  // const outlineLogoRef = useRef()
+  // const solidLogoRef = useRef()
+
+  return (
+    <div className="logo-container" ref={bgRef}>
+      {/* <img ref={solidLogoRef} src={LogoS} alt="S" className="solid-logo" /> */}
+      <svg
+        width="805"
+        height="803"
+        viewBox="0 0 805 803"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2.5 3L2.5 799.4"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M109.971 82.6367L109.971 733.03"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M741.384 460.931L210.731 733.034"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M680.975 434.382L217.494 673.303"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M62.99 42.8173L60.5432 736.084"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M741.384 368.017V460.212"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M680.975 401.199V434.383"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M2.5 3.00014L216.931 3.00014"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M62.99 42.8173H150.312"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M150.229 82.6367L224.118 82.6367"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M109.971 733.033L210.727 733.033"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M801.679 494.114L801.823 308.288"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M2.5 799.399H218.139"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M217.417 3L801.806 308.287"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M224.155 82.6367L741.374 368.014"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M371.974 228.649L680.962 401.202"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M801.841 494.113L217.449 799.397"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M156.992 673.3H217.446"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+      </svg>
+    </div>
+  );
+};
+
+export default Logo;
