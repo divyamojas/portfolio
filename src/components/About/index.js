@@ -33,15 +33,19 @@ const About = () => {
               idx={15}
             />
           </h1>
+          <p>Hey there, I am Divyam! Welcome to my little world. </p>
           <p>
-            Hey there, fellow internet wanderer! I'm Divyam Ojas, a student with
-            a passion for all things tech.
+            {' '}
+            Recently turned 22, I'm currently in the final year of engineering
+            at NIT, Rourkela. Still experimenting with things out there. I have
+            always been fascinated by the world around me all my life and the
+            physics behind everything blows my mind out. I am super excited to
+            work on new stuff.
           </p>
           <p>
-            I may not have years of experience under my belt, but I've got
-            plenty of enthusiasm and a willingness to learn. When it comes to
-            technology, I'm like a kid in a candy store, with so many sweet
-            treats to choose from and so little time.
+            {' '}
+            If you have some time please checkout my few projects! <br /> Got a
+            project in your mind? Let's make it real.
           </p>
         </div>
         <div className="stage-cube-cont">
