@@ -1,15 +1,31 @@
+import { Card } from '@mui/material'
 import React from 'react'
 import './index.scss'
 
 const ProjectTile = ({ title, techstack, snapshot }) => {
   return (
-    <div className="project-tile-container">
-      <div className="project-title"></div>
-      <div className="project-techstack"></div>
+    <Card
+      className="project-tile-container"
+      onClick={() => {
+        window.open('https://fundraiserrr.netlify.app/', '_blank')
+      }}
+    >
+      <div className="project-info">
+        <div className="project-title">
+          <h2>{title}</h2>
+        </div>
+        <div className="project-techstack">
+          {techstack.map((stack, key) => (
+            <div key={key}>
+              {stack} {key !== techstack.length - 1 ? <span>&#9679;</span> : ''}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="project-snapshot">
         <img src={snapshot} alt="" />
       </div>
-    </div>
+    </Card>
   )
 }
 

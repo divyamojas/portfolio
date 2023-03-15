@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Loader from 'react-loaders'
 import AnimatedLetters from '../AnimatedLetters'
 import ProjectTile from '../ProjectTile'
-import fundraiserrr from '../../assets/images/fundraiserr-snapshot.png'
 
+import { mm, fundraiserr, todoozzz } from '../../assets/images'
 import './index.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -20,27 +20,22 @@ const Projects = () => {
   const PROJECTS = [
     {
       title: 'Fundraiserrr',
-      snapshot: fundraiserrr,
+      snapshot: fundraiserr,
       techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
       link: 'https://fundraiserrr.netlify.app/',
     },
+
     {
-      title: 'Fundraiserrr',
-      snapshot: fundraiserrr,
+      title: 'Todoozzz',
+      snapshot: todoozzz,
       techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
-      link: 'https://fundraiserrr.netlify.app/',
+      link: 'https://todoozzz.web.app/signin',
     },
     {
-      title: 'Fundraiserrr',
-      snapshot: fundraiserrr,
+      title: 'Monday Morning',
+      snapshot: mm,
       techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
-      link: 'https://fundraiserrr.netlify.app/',
-    },
-    {
-      title: 'Fundraiserrr',
-      snapshot: fundraiserrr,
-      techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
-      link: 'https://fundraiserrr.netlify.app/',
+      link: 'https://mondaymorning.nitrkl.ac.in/',
     },
   ]
   useEffect(() => {
@@ -66,8 +61,8 @@ const Projects = () => {
             {PROJECTS.map((project, key) => (
               <ProjectTile
                 title={project.title}
+                techstack={project.techstack}
                 snapshot={project.snapshot}
-                techstack={project.snapshot}
                 link={project.link}
                 key={key}
               />
