@@ -1,17 +1,12 @@
 .logo-container {
   z-index: 0;
   width: 400px;
-  height: 609px;
+  height: 70vh;
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 0;
-  right: 15%;
-  bottom: 0;
-  left: auto;
-  margin: auto;
+  justify-content: center;
 
-  svg {
+  img {
     width: 100%;
     height: auto;
     bottom: 0;
@@ -19,12 +14,6 @@
   }
 
   .solid-logo {
-    position: absolute;
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: 0;
-    margin: auto;
     width: 100%;
     opacity: 0;
     transform: rotateZ(30deg);
@@ -35,4 +24,24 @@
 .svg-container {
   stroke: #ffd700;
   stroke-width: 10px;
+}
+
+@media screen and (max-width: 480px) {
+  .logo-container {
+    display: none;
+    // width: auto;
+    // height: auto;
+    // order: 1;
+    // img {
+    //   width: 30vw;
+    // }
+  }
+}
+/* @keyframes duration | easing-function | delay |
+iteration-count | direction | fill-mode | play-state | name */
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

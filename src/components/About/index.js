@@ -5,22 +5,22 @@ import {
   faHtml5,
   faJsSquare,
   faReact,
-} from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
-import Loader from "react-loaders";
-import AnimatedLetters from "../AnimatedLetters";
+} from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
+import Loader from 'react-loaders'
+import AnimatedLetters from '../AnimatedLetters'
 
-import "./index.scss";
+import './index.scss'
 
 const About = () => {
-  const [letterClass, setLetterClass] = useState("text-animate");
+  const [letterClass, setLetterClass] = useState('text-animate')
 
   useEffect(() => {
     setTimeout(() => {
-      setLetterClass("text-animate-hover");
-    }, 3000);
-  }, []);
+      setLetterClass('text-animate-hover')
+    }, 3000)
+  }, [])
 
   return (
     <>
@@ -28,26 +28,30 @@ const About = () => {
         <div className="text-zone">
           <h1>
             <AnimatedLetters
-              strArray={["A", "b", "o", "u", "t", " ", "m", "e"]}
+              strArray={['A', 'b', 'o', 'u', 't', ' ', 'm', 'e']}
               letterClass={letterClass}
               idx={15}
             />
           </h1>
+          <p>Hey there, I am Divyam! Welcome to my little world. </p>
           <p>
-            Hey there, fellow internet wanderer! I'm Divyam Ojas, a student with
-            a passion for all things tech.
+            {' '}
+            Recently turned 22, I'm currently in the final year of engineering
+            at NIT, Rourkela. Still experimenting with things out there. I have
+            always been fascinated by the world around me all my life and the
+            physics behind everything blows my mind out. I am super excited to
+            work on new stuff.
           </p>
           <p>
-            I may not have years of experience under my belt, but I've got
-            plenty of enthusiasm and a willingness to learn. When it comes to
-            technology, I'm like a kid in a candy store, with so many sweet
-            treats to choose from and so little time.
+            {' '}
+            If you have some time please checkout my few projects! <br /> Got a
+            project in your mind? Let's make it real.
           </p>
         </div>
         <div className="stage-cube-cont">
           <div className="cubespinner">
             <div className="face1">
-              <FontAwesomeIcon icon={faEthereum} color="#12100B" />
+              <FontAwesomeIcon icon={faEthereum} color="#6e6e6e" />
             </div>
             <div className="face2">
               <FontAwesomeIcon icon={faHtml5} color="#F06529" />
@@ -69,7 +73,7 @@ const About = () => {
       </div>
       <Loader type="pacman" />
     </>
-  );
-};
+  )
+}
 
-export default About;
+export default About
