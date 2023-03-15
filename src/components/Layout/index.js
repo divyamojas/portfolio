@@ -8,22 +8,23 @@ import './index.scss'
 const Layout = () => {
   const { width } = useWindowDimensions()
   return (
-    <div className="App">
-      {width > 480 ? <Sidebar /> : <BottomBar />}
+    <div className="app">
+      <div className="navbar">{width > 480 && <Sidebar />}</div>
+      {width <= 480 && <BottomBar />}
       <div className="page">
         <span className="tags top-tags">
           <span className="top-tag-doctype"> &lt;!doctype portfolio&gt;</span>
           <br />
           <span className="top-tag-html"> &lt;html&gt;</span>
           <br />
-          &lt;body&gt;
+          <span className="body-tag"> &lt;body&gt;</span>
         </span>
         <div className="content">
           <Outlet />
         </div>
 
         <span className="tags bottom-tags">
-          &lt;/body&gt;
+          <span className="body-tag"> &lt;/body&gt;</span>
           <br />
           <span className="bottom-tag-html"> &lt;/html&gt;</span>
           <br />
