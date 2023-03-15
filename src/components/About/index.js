@@ -5,22 +5,22 @@ import {
   faHtml5,
   faJsSquare,
   faReact,
-} from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
-import Loader from "react-loaders";
-import AnimatedLetters from "../AnimatedLetters";
+} from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
+import Loader from 'react-loaders'
+import AnimatedLetters from '../AnimatedLetters'
 
-import "./index.scss";
+import './index.scss'
 
 const About = () => {
-  const [letterClass, setLetterClass] = useState("text-animate");
+  const [letterClass, setLetterClass] = useState('text-animate')
 
   useEffect(() => {
     setTimeout(() => {
-      setLetterClass("text-animate-hover");
-    }, 3000);
-  }, []);
+      setLetterClass('text-animate-hover')
+    }, 3000)
+  }, [])
 
   return (
     <>
@@ -28,7 +28,7 @@ const About = () => {
         <div className="text-zone">
           <h1>
             <AnimatedLetters
-              strArray={["A", "b", "o", "u", "t", " ", "m", "e"]}
+              strArray={['A', 'b', 'o', 'u', 't', ' ', 'm', 'e']}
               letterClass={letterClass}
               idx={15}
             />
@@ -47,7 +47,7 @@ const About = () => {
         <div className="stage-cube-cont">
           <div className="cubespinner">
             <div className="face1">
-              <FontAwesomeIcon icon={faEthereum} color="#12100B" />
+              <FontAwesomeIcon icon={faEthereum} color="#6e6e6e" />
             </div>
             <div className="face2">
               <FontAwesomeIcon icon={faHtml5} color="#F06529" />
@@ -69,7 +69,7 @@ const About = () => {
       </div>
       <Loader type="pacman" />
     </>
-  );
-};
+  )
+}
 
-export default About;
+export default About
