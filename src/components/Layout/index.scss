@@ -54,8 +54,9 @@
   align-items: center;
   flex-wrap: wrap;
   padding-inline: 10vw;
-  width: 74vw;
-  min-height: 70vh;
+  margin-top: 20px;
+  width: -webkit-fill-available;
+  min-height: 60vh;
   will-change: contents;
   opacity: 0;
   z-index: 1;
@@ -133,10 +134,11 @@
 }
 
 .projects-page {
-  .text-zone {
-    top: 20%;
-    margin-top: 95px;
-  }
+  padding: 20px;
+}
+.my-projects-title {
+  width: 74vw;
+  padding-left: 5vw;
 }
 
 @media screen and (max-width: 480px) {
@@ -150,11 +152,18 @@
   .container {
     flex-direction: column;
     min-height: auto;
+    width: 100vw;
+    padding-inline: 0;
+    margin-top: 4vh;
   }
   .about-page,
-  .contact-page {
+  .contact-page,
+  .projects-page {
     .text-zone {
       width: 80vw;
+    }
+    h1 {
+      font-size: 44px;
     }
   }
 }

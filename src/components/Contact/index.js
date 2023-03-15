@@ -47,7 +47,7 @@ const Contact = () => {
         <div className="text-zone">
           <h1>
             <AnimatedLetters
-              strArray={['C', 'o', 'n', 't', 'a', 'c', 't', ' ', 'm', 'e']}
+              strArray={("Contact me!").split("")}
               idx={15}
               letterClass={letterClass}
             />
