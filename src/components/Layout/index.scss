@@ -1,16 +1,17 @@
-.app{
+.app {
   height: auto;
   overflow: hidden;
 }
 .page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   top: 0;
   bottom: 0;
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100vw;
 }
 
 .top-tags {
@@ -25,7 +26,7 @@
   position: absolute;
   bottom: 0;
   height: 12vh;
-  left: 120px;
+  left: 10%;
   font-size: 18px;
   font-family: 'La Belle Aurore';
 }
@@ -39,11 +40,17 @@
 .bottom-tag-html {
   margin-left: -20px;
 }
+.bottom-thanks {
+  margin-left: -20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
 .content {
   position: relative;
   width: 80%;
-  background: red;
   min-height: 60vh;
+  margin-top: 16vh;
+  margin-bottom: 14vh;
 }
 
 .container {
@@ -138,5 +145,17 @@
   .text-zone {
     top: 20%;
     margin-top: 95px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .top-tag-doctype {
+    margin-left: -4px;
+  }
+  .top-tag-html {
+    margin-left: -4px;
+  }
+  .bottom-tag-html {
+    margin-left: -4px;
   }
 }
