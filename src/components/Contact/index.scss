@@ -30,8 +30,8 @@
     }
   }
 
-  input[type="text"],
-  input[type="email"] {
+  input[type='text'],
+  input[type='email'] {
     width: 100%;
     border: 0;
     height: 30px;
@@ -53,9 +53,9 @@
 
   input,
   textarea {
-    font-family: "Coolvetica";
+    font-family: 'Coolvetica';
     border-radius: 4px;
-    background: #967bb624;
+    background: #967bb658;
   }
 
   .flat-button {
@@ -68,6 +68,11 @@
     border: 1px solid #ffd700;
     float: right;
     border-radius: 4px;
+    &:hover {
+      background: #ffd700;
+      color: #000;
+      transition: ease-in-out 0.3s;
+    }
   }
 }
 
@@ -80,7 +85,7 @@
   width: 267px;
   padding: 20px;
   color: #fff;
-  font-family: "Helvetica Neue";
+  font-family: 'Helvetica Neue';
   font-size: 17px;
   font-weight: 300;
   opacity: 0;
