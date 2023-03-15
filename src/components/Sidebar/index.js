@@ -1,15 +1,15 @@
-import { Link, NavLink } from "react-router-dom";
-import "./index.scss";
-import LogoS from "../../assets/images/D-logo-24px.svg";
-import LogoSubtitle from "../../assets/images/Divyam-logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, NavLink } from 'react-router-dom'
+import './index.scss'
+import LogoS from '../../assets/images/D-logo-24px.svg'
+import LogoSubtitle from '../../assets/images/Divyam-logo.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faBriefcase,
   faEnvelope,
+  faFolder,
   faHome,
   faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-solid-svg-icons'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 const Sidebar = () => {
   return (
@@ -30,14 +30,14 @@ const Sidebar = () => {
         >
           <FontAwesomeIcon icon={faUser} color="#4d4d4e" />
         </NavLink>
-        
+
         <NavLink
           exact="true"
           activeclassname="active"
           className="projects-link"
           to="/projects"
         >
-          <FontAwesomeIcon icon={faBriefcase} color="#4d4d4e" />
+          <FontAwesomeIcon icon={faFolder} color="#4d4d4e" />
         </NavLink>
         <NavLink
           exact="true"
@@ -79,7 +79,7 @@ const Sidebar = () => {
         </li> */}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

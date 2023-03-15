@@ -1,47 +1,53 @@
-import React, { useEffect, useRef, useState } from "react";
-import Loader from "react-loaders";
-import emailjs from "@emailjs/browser";
+import React, { useEffect, useRef, useState } from 'react'
+import Loader from 'react-loaders'
+import emailjs from '@emailjs/browser'
 
-import "./index.scss";
-import AnimatedLetters from "../AnimatedLetters";
+import './index.scss'
+import AnimatedLetters from '../AnimatedLetters'
+import { Backdrop, CircularProgress } from '@mui/material'
 
 const Contact = () => {
-  const [letterClass, setLetterClass] = useState("text-animate");
-  const refForm = useRef();
+  const [letterClass, setLetterClass] = useState('text-animate')
+  const [open, setOpen] = React.useState(false)
+
+  const refForm = useRef()
   useEffect(() => {
     setTimeout(() => {
-      setLetterClass("text-animate-hover");
-    }, 3000);
-  }, []);
+      setLetterClass('text-animate-hover')
+    }, 3000)
+  }, [])
 
   const sendEmail = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setOpen(true)
 
     emailjs
       .sendForm(
-        "myriad_emails",
-        "portfolio",
+        'myriad_emails',
+        'portfolio',
         refForm.current,
-        "wWU_Kle6cWQFmDvGm"
+        'wWU_Kle6cWQFmDvGm'
       )
       .then(
         () => {
-          alert("Message Successfully sent!");
-          window.location.reload(false);
+          alert('Message Successfully sent!')
+          window.location.reload(false)
+          setOpen(false)
         },
         (e) => {
-          console.log(e);
-          alert("Failed to send the message, please try again!");
+          setOpen(false)
+          console.log(e)
+          alert('Failed to send the message, please try again!')
         }
-      );
-  };
+      )
+  }
   return (
     <>
       <div className="container contact-page">
         <div className="text-zone">
           <h1>
             <AnimatedLetters
-              strArray={["C", "o", "n", "t", "a", "c", "t", " ", "m", "e"]}
+              strArray={['C', 'o', 'n', 't', 'a', 'c', 't', ' ', 'm', 'e']}
               idx={15}
               letterClass={letterClass}
             />
@@ -89,8 +95,15 @@ const Contact = () => {
         </div>
       </div>
       <Loader type="pacman" />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        {/* <Loader type="pacman" /> */}
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact
