@@ -3,7 +3,6 @@ import Loader from 'react-loaders'
 import AnimatedLetters from '../AnimatedLetters'
 import ProjectTile from '../ProjectTile'
 
-import { mm, fundraiserr, todoozzz } from '../../assets/images'
 import './index.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -14,30 +13,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import useWindowDimensions from '../../hooks/useWindowDimension'
 
+import {PROJECTS} from '../../assets/objects'
+
 const Projects = () => {
   const [letterClass, setLetterClass] = useState('text-animate')
   const { width } = useWindowDimensions()
-  const PROJECTS = [
-    {
-      title: 'Fundraiserrr',
-      snapshot: fundraiserr,
-      techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
-      link: 'https://fundraiserrr.netlify.app/',
-    },
-
-    {
-      title: 'Todoozzz',
-      snapshot: todoozzz,
-      techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
-      link: 'https://todoozzz.web.app/signin',
-    },
-    {
-      title: 'Monday Morning',
-      snapshot: mm,
-      techstack: [ 'ReactJS', 'TailwindCss'],
-      link: 'https://mondaymorning.nitrkl.ac.in/',
-    },
-  ]
+  
   useEffect(() => {
     setTimeout(() => {
       setLetterClass('text-animate-hover')
