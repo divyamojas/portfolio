@@ -18,7 +18,7 @@ const PROJECTS = [
     title: 'Todoozzz',
     snapshot: todoozzz,
     techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
-    link: 'https://todoozzz.web.app/signin',
+    link: 'https://todoozzz.web.app/',
   },
 ]
 
