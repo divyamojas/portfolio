@@ -18,43 +18,58 @@ export default function BottomBar() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
     navigate(`/${newValue}`)
-    console.log(event)
   }
 
+  const NAV_STYLES = {
+    color: '#967bb6',
+    borderLeft: '1px solid #967bb624',
+  }
+
+  const NAV_BUTTONS = [
+    {
+      label: 'Home',
+      value: '',
+      icon: <HomeRounded />,
+      style: NAV_STYLES,
+    },
+    {
+      label: 'About',
+      value: 'about',
+      icon: <Person4Rounded />,
+      style: NAV_STYLES,
+    },
+    {
+      label: 'Projects',
+      value: 'projects',
+      icon: <FolderRounded />,
+      style: NAV_STYLES,
+    },
+    {
+      label: 'Contact',
+      value: 'contact',
+      icon: <MailRounded />,
+      style: NAV_STYLES,
+    },
+  ]
   return (
     <BottomNavigation
       sx={{
         width: width,
-        background: 'rgba(150, 107, 183, 0.06)',
-        boxShadow: '0px 4px 4px -2px rgba(150, 107, 183, 0.25)',
+        background: 'black',
+        boxShadow: '-1px -1px 1px 1px #967bb644;',
       }}
       value={value}
       onChange={handleChange}
     >
-      <BottomNavigationAction
-        label="Home"
-        value=""
-        icon={<HomeRounded />}
-        style={{ color: '#967bb6' }}
-      />
-      <BottomNavigationAction
-        label="About"
-        value="about"
-        icon={<Person4Rounded />}
-        style={{ color: '#967bb6' }}
-      />
-      <BottomNavigationAction
-        label="Projects"
-        value="projects"
-        icon={<FolderRounded />}
-        style={{ color: '#967bb6' }}
-      />
-      <BottomNavigationAction
-        label="Contact"
-        value="contact"
-        icon={<MailRounded />}
-        style={{ color: '#967bb6' }}
-      />
+      {NAV_BUTTONS.map((nav, key) => (
+        <BottomNavigationAction
+          label={nav.label}
+          value={nav.value}
+          icon={nav.icon}
+          style={nav.style}
+          key={key}
+        />
+      ))}
     </BottomNavigation>
   )
 }

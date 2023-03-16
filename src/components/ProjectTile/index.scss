@@ -10,6 +10,7 @@
   align-items: center;
   padding: 10px;
   margin-bottom: 20px;
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
     transition: 0.1s ease-in;
@@ -37,6 +38,12 @@
       opacity: 0.6;
       color: #fff;
       padding-left: 4px;
+      .techstack-skill{
+        margin-left: 2px;
+        span{
+          color: #967bb6;
+        }
+      }
     }
   }
   .project-snapshot {

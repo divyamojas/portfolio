@@ -9,8 +9,10 @@ const Layout = () => {
   const { width } = useWindowDimensions()
   return (
     <div className="app">
-      <div className="navbar">{width > 480 && <Sidebar />}</div>
-      {width <= 480 && <BottomBar />}
+      <div className="navbar">
+        {width > 480 && <Sidebar />}
+        {width <= 480 && <BottomBar />}
+      </div>
       <div className="page">
         <span className="tags top-tags">
           <span className="top-tag-doctype"> &lt;!doctype portfolio&gt;</span>

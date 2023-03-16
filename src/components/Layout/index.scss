@@ -1,6 +1,6 @@
 .app {
   min-height: 100vh;
-  width: 100vw;
+  width: 98vw;
   overflow: hidden;
 }
 .navbar {
@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  margin-left: 5%;
+  padding-left: 70px;
   width: 100vw;
   min-height: 100vh;
 }
@@ -29,7 +29,7 @@
   margin-left: 3%;
 }
 .top-tags {
-  margin-top: 4vh;
+  margin-top: 3vh;
 }
 
 .top-tag-doctype,
@@ -55,7 +55,7 @@
   flex-wrap: wrap;
   padding-inline: 10vw;
   margin-top: 20px;
-  width: -webkit-fill-available;
+  width: 78vw;
   min-height: 60vh;
   will-change: contents;
   opacity: 0;
@@ -142,9 +142,22 @@
 }
 
 @media screen and (max-width: 480px) {
+  .app {
+    margin-bottom: 60px;
+    min-height: auto;
+  }
   .page {
     margin-left: 0;
-    min-height: 81vh;
+    min-height: 89vh;
+    padding-left: 0;
+  }
+  .navbar {
+    top: auto;
+    left: auto;
+    bottom: 0;
+    height: auto;
+    width: 100vw;
+    z-index: 1000;
   }
   .tags {
     margin-left: 5%;

@@ -16,7 +16,7 @@ const ProjectTile = ({ title, techstack, snapshot, link }) => {
         </div>
         <div className="project-techstack">
           {techstack.map((stack, key) => (
-            <div key={key}>
+            <div key={key} className = "techstack-skill">
               {stack} {key !== techstack.length - 1 ? <span>&#9679;</span> : ''}
             </div>
           ))}
