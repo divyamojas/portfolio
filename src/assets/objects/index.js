@@ -4,7 +4,7 @@ const PROJECTS = [
   {
     title: 'Monday Morning',
     snapshot: mm,
-    techstack: ['ReactJS', 'TailwindCss'],
+    techstack: ['ReactJS', 'MaterialUI', 'MongoDB'],
     link: 'https://mondaymorning.nitrkl.ac.in/',
   },
   {
@@ -17,7 +17,7 @@ const PROJECTS = [
   {
     title: 'Todoozzz',
     snapshot: todoozzz,
-    techstack: ['ReactJS', 'MaterialUI',],
+    techstack: ['ReactJS', 'MaterialUI', 'CSS'],
     link: 'https://todoozzz.web.app/',
   },
 ]
