@@ -3,17 +3,17 @@
   "name": "Wanna change the world? Hop in.",
   "icons": [
     {
-      "src": "D-logo-24px.svg",
+      "src": "D-logo-24px.jpeg",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "D-logo-24px.svg",
+      "src": "D-logo-24px.jpeg",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "D-logo-24px.svg",
+      "src": "D-logo-24px.jpeg",
       "type": "image/png",
       "sizes": "512x512"
     }
