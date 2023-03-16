@@ -34,7 +34,7 @@ const Projects = () => {
     {
       title: 'Monday Morning',
       snapshot: mm,
-      techstack: ['Solidity', 'ReactJS', 'TailwindCss', 'Thirdweb'],
+      techstack: [ 'ReactJS', 'TailwindCss'],
       link: 'https://mondaymorning.nitrkl.ac.in/',
     },
   ]

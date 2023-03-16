@@ -2,12 +2,12 @@ import { Card } from '@mui/material'
 import React from 'react'
 import './index.scss'
 
-const ProjectTile = ({ title, techstack, snapshot }) => {
+const ProjectTile = ({ title, techstack, snapshot, link }) => {
   return (
     <Card
       className="project-tile-container"
       onClick={() => {
-        window.open('https://fundraiserrr.netlify.app/', '_blank')
+        window.open(link, '_blank')
       }}
     >
       <div className="project-info">
