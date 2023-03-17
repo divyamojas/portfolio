@@ -62,7 +62,7 @@ const Sidebar = () => {
           <a
             target="_blank"
             rel="noreferrer" // used to not pass the refererrer, i.e. don't tell linkedin that I come from my website ..maybe
-            href="https://www.linkedin.com/in/divyamojas/"
+            href="https://github.com/divyamojas"
           >
             <FontAwesomeIcon icon={faGithub} color="#4d4d4e" />
           </a>
