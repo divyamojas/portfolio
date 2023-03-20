@@ -18,7 +18,7 @@ const PROJECTS = [
     title: 'Todoozzz',
     snapshot: todoozzz,
     techstack: ['ReactJS', 'MaterialUI', 'CSS'],
-    link: 'https://todoozzz.web.app/',
+    link: 'https://todoozzz.netlify.app/',
   },
 ]
 
