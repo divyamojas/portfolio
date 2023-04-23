@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+  <meta name="theme-color" content="#000000" />
+  <!-- The line just under the title when sharing the link -->
+  <meta name="description" content="Wanna change the world? Hop in." />
+  <!-- The image when sharing the link -->
+  <meta property="og:image" content="/D-logo-24px.jpeg" />
+  <link rel="apple-touch-icon" href="/D-logo-24px.svg" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divyam Ojas</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+
+  <div id="root"></div>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    ; (function () {
+      emailjs.init('wWU_Kle6cWQFmDvGm')
+    })()
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
