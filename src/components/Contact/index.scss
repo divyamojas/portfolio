@@ -107,136 +107,186 @@
   }
 }
 
-/* ── FRIDAY Diagnostic Panel ───────────────────────────────────────── */
-.friday-diagnostic {
-  position: relative;
-  margin-top: 20px;
-  clear: both;
-  background: rgba(8, 12, 20, 0.97);
-  border: 1px solid rgba(220, 38, 38, 0.35);
-  border-radius: 8px;
-  padding: 20px 22px 16px;
-  overflow: hidden;
-  animation: fdSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+/* ── FRIDAY Full-Screen Diagnostic Overlay ────────────────────────── */
+.friday-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 7, 14, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: foFadeIn 0.35s ease both;
 
-  [data-theme="light"] & {
-    background: rgba(255, 250, 250, 0.98);
-    border-color: rgba(185, 28, 28, 0.30);
-  }
-
-  /* Corner brackets */
-  .fd-corner {
+  /* Full-height scanline sweep */
+  .fo-scanline {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    border-color: var(--energy);
-    border-style: solid;
-    opacity: 0.7;
-    &.fd-tl { top: 6px; left: 6px;  border-width: 1.5px 0 0 1.5px; }
-    &.fd-tr { top: 6px; right: 6px; border-width: 1.5px 1.5px 0 0; }
-    &.fd-bl { bottom: 6px; left: 6px;  border-width: 0 0 1.5px 1.5px; }
-    &.fd-br { bottom: 6px; right: 6px; border-width: 0 1.5px 1.5px 0; }
-  }
-
-  /* Animated scanline */
-  .fd-scanline {
-    position: absolute;
-    top: 0;
     left: 0;
     right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--energy), transparent);
-    opacity: 0.4;
-    animation: fdScan 2.2s linear infinite;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--energy) 50%, transparent 100%);
+    opacity: 0;
+    animation: foScanFull 3.5s linear infinite;
     pointer-events: none;
   }
 
+  /* Large rotating reactor as background watermark */
+  .fo-reactor-bg {
+    position: absolute;
+    width: min(700px, 90vw);
+    height: min(700px, 90vw);
+    opacity: 1;
+    animation: alSpinCW 24s linear infinite;
+    pointer-events: none;
+  }
+
+  /* ── Panel ── */
+  .fo-panel {
+    position: relative;
+    width: min(640px, 92vw);
+    background: rgba(6, 10, 18, 0.97);
+    border: 1px solid rgba(220, 38, 38, 0.45);
+    border-radius: 12px;
+    padding: 32px 36px 26px;
+    overflow: hidden;
+    animation: foPanelIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    [data-theme="light"] & {
+      background: rgba(254, 248, 248, 0.98);
+      border-color: rgba(185, 28, 28, 0.35);
+    }
+  }
+
+  /* Corner brackets */
+  .fo-corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--energy);
+    border-style: solid;
+    opacity: 0.75;
+    animation: foCornerIn 0.6s ease both;
+    &.fo-tl { top: 10px; left: 10px;  border-width: 2px 0 0 2px;  animation-delay: 0.1s; }
+    &.fo-tr { top: 10px; right: 10px; border-width: 2px 2px 0 0;  animation-delay: 0.15s; }
+    &.fo-bl { bottom: 10px; left: 10px;  border-width: 0 0 2px 2px; animation-delay: 0.2s; }
+    &.fo-br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; animation-delay: 0.25s; }
+  }
+
   /* Header */
-  .fd-header {
+  .fo-header {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 18px;
+    animation: foRowIn 0.45s 0.15s ease both;
 
-    .fd-label {
+    .fo-warn {
+      font-size: 16px;
+      line-height: 1;
+      color: var(--energy);
+    }
+
+    .fo-title {
       font-family: 'Coolvetica', 'Space Grotesk', sans-serif;
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 4px;
       color: var(--energy);
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
-    .fd-dot {
-      width: 5px;
-      height: 5px;
+    .fo-dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--energy);
-      animation: dotPulse 0.8s ease-in-out infinite;
+      flex-shrink: 0;
+      animation: dotPulse 0.9s ease-in-out infinite;
     }
 
-    .fd-status {
+    .fo-status {
       font-family: 'Coolvetica', monospace;
-      font-size: 11px;
-      letter-spacing: 1px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
       color: var(--energy);
-      font-weight: 600;
+      font-weight: 700;
     }
+  }
+
+  /* Divider */
+  .fo-rule {
+    height: 1px;
+    background: linear-gradient(90deg, var(--energy), transparent);
+    opacity: 0.25;
+    margin-bottom: 20px;
+    animation: foRowIn 0.45s 0.2s ease both;
   }
 
   /* Data rows */
-  .fd-body {
+  .fo-body {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-bottom: 16px;
-    border-left: 2px solid rgba(220, 38, 38, 0.30);
-    padding-left: 12px;
+    gap: 8px;
+    margin-bottom: 22px;
+    border-left: 2px solid rgba(220, 38, 38, 0.28);
+    padding-left: 14px;
   }
 
-  .fd-row {
+  .fo-row {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     align-items: flex-start;
+    animation: foRowIn 0.4s ease both;
 
-    .fd-key {
+    &:nth-child(1) { animation-delay: 0.25s; }
+    &:nth-child(2) { animation-delay: 0.35s; }
+    &:nth-child(3) { animation-delay: 0.45s; }
+
+    .fo-key {
       font-family: 'Coolvetica', monospace;
       font-size: 9px;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       color: var(--text-muted);
-      min-width: 80px;
+      min-width: 72px;
       padding-top: 2px;
+      flex-shrink: 0;
       user-select: none;
     }
 
-    .fd-val {
+    .fo-val {
       font-family: 'Coolvetica', monospace;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
       user-select: text;
+      word-break: break-word;
     }
 
-    &.fd-error-row .fd-val--error {
+    &.fo-row--fault .fo-val--error {
       color: var(--energy);
-      font-weight: 600;
+      font-weight: 700;
+      animation: foGlitch 0.6s 0.5s ease both;
     }
   }
 
   /* FRIDAY quip */
-  .fd-quip {
-    margin: 0 0 16px;
-    padding: 10px 14px;
+  .fo-quip {
+    margin: 0 0 22px;
+    padding: 14px 18px;
     background: rgba(220, 38, 38, 0.05);
-    border-left: 2px solid rgba(220, 38, 38, 0.25);
-    border-radius: 0 4px 4px 0;
+    border-left: 2px solid rgba(220, 38, 38, 0.22);
+    border-radius: 0 6px 6px 0;
+    animation: foRowIn 0.4s 0.55s ease both;
 
     p {
       font-family: 'La Belle Aurore', cursive;
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-secondary);
-      margin: 0 0 4px;
+      margin: 0 0 6px;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.7;
       user-select: text;
       animation: none !important;
     }
@@ -244,52 +294,152 @@
     cite {
       font-family: 'Inter', sans-serif;
       font-size: 10px;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--text-muted);
       font-style: normal;
       user-select: none;
     }
   }
 
-  /* Action buttons */
-  .fd-actions {
+  /* Countdown */
+  .fo-countdown {
     display: flex;
-    gap: 10px;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    animation: foRowIn 0.4s 0.6s ease both;
+
+    .fo-cd-track {
+      flex: 1;
+      height: 3px;
+      background: rgba(220, 38, 38, 0.15);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .fo-cd-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(220, 38, 38, 0.5), var(--energy));
+      border-radius: 2px;
+      transform-origin: left;
+      animation: foCountdown linear forwards;
+    }
+
+    .fo-cd-label {
+      font-family: 'Coolvetica', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--energy);
+      opacity: 0.65;
+      white-space: nowrap;
+      user-select: none;
+    }
   }
 
-  .fd-btn {
+  /* Action buttons */
+  .fo-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    animation: foRowIn 0.4s 0.65s ease both;
+  }
+
+  .fo-btn {
     font-family: 'Inter', sans-serif;
     font-size: 10px;
+    font-weight: 600;
     letter-spacing: 2px;
-    padding: 6px 14px;
-    border-radius: 3px;
+    padding: 8px 18px;
+    border-radius: 4px;
     cursor: pointer;
-    border: 1px solid rgba(220, 38, 38, 0.40);
+    border: 1px solid rgba(220, 38, 38, 0.45);
     background: transparent;
     color: var(--energy);
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease;
 
-    &:hover { background: rgba(220, 38, 38, 0.12); }
+    &:hover { background: rgba(220, 38, 38, 0.12); border-color: rgba(220, 38, 38, 0.70); }
 
     &--retry {
       color: var(--arc);
-      border-color: rgba(6, 182, 212, 0.40);
-      &:hover { background: rgba(6, 182, 212, 0.10); }
+      border-color: rgba(6, 182, 212, 0.45);
+      &:hover { background: rgba(6, 182, 212, 0.10); border-color: rgba(6, 182, 212, 0.70); }
+    }
+
+    @media screen and (max-width: 400px) {
+      width: 100%;
+      text-align: center;
     }
   }
 }
 
-@keyframes fdSlideIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0);   }
+/* Overlay keyframes */
+@keyframes foFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-@keyframes fdScan {
-  0%   { top: 0%;   opacity: 0;   }
-  5%   { opacity: 0.4; }
-  95%  { opacity: 0.4; }
-  100% { top: 100%; opacity: 0;   }
+@keyframes foPanelIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+@keyframes foCornerIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 0.75; transform: scale(1); }
+}
+
+@keyframes foRowIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+@keyframes foGlitch {
+  0%   { transform: translateX(0);  }
+  20%  { transform: translateX(-4px) skewX(-3deg); color: #ff4444; }
+  40%  { transform: translateX(4px)  skewX(3deg);  }
+  60%  { transform: translateX(-2px); }
+  80%  { transform: translateX(2px);  color: var(--energy); }
+  100% { transform: translateX(0);  }
+}
+
+@keyframes foScanFull {
+  0%   { top: -3px; opacity: 0;   }
+  3%   { opacity: 0.55; }
+  97%  { opacity: 0.55; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+@keyframes foCountdown {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* Mobile tweaks for the overlay panel */
+@media screen and (max-width: 480px) {
+  .friday-overlay .fo-panel {
+    padding: 24px 20px 20px;
+
+    .fo-header {
+      gap: 7px;
+      .fo-title { font-size: 9px; letter-spacing: 2.5px; }
+      .fo-status { font-size: 10px; }
+    }
+
+    .fo-body .fo-row {
+      flex-direction: column;
+      gap: 2px;
+      .fo-key { min-width: unset; }
+    }
+
+    .fo-quip p { font-size: 12px; }
+
+    .fo-actions {
+      justify-content: stretch;
+      .fo-btn { flex: 1; text-align: center; }
+    }
+  }
 }
 
 /* -------------------------------------------------------

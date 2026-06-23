@@ -87,60 +87,102 @@ const JARVISScreen = ({ onClose }) => {
 
 /* FRIDAY error quips — because plain red boxes are beneath us */
 const FRIDAY_QUIPS = [
-  { line: '"Yeah, the antenna's definitely fried."', attr: '— T. Stark, probably' },
-  { line: '"I\'ve run seventeen diagnostics. The issue isn\'t on our end."', attr: '— FRIDAY, logging it anyway' },
-  { line: '"Have you tried turning it off and on again?" "That\'s not how arc reactors work." "Same principle."', attr: '— FRIDAY & Tony, 2014' },
-  { line: '"The Sanctum\'s wards are blocking the signal. Or EmailJS is down. Hard to say."', attr: '— Dr. Strange, unhelpfully' },
+  { line: `"Yeah, the antenna's definitely fried."`, attr: '— T. Stark, probably' },
+  { line: `"I've run seventeen diagnostics. The issue isn't on our end."`, attr: '— FRIDAY, logging it anyway' },
+  { line: `"Have you tried turning it off and on again?" "That's not how arc reactors work." "Same principle."`, attr: '— FRIDAY & Tony, 2014' },
+  { line: `"The Sanctum's wards are blocking the signal. Or EmailJS is down. Hard to say."`, attr: '— Dr. Strange, unhelpfully' },
 ]
 
-const FRIDAYDiagnostic = ({ error, onRetry, onDismiss }) => {
-  const quip = FRIDAY_QUIPS[Math.floor(Math.random() * FRIDAY_QUIPS.length)]
-  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19)
+const DISMISS_SECS = 10
+
+const FRIDAYOverlay = ({ error, onRetry, onDismiss }) => {
+  const [quip] = useState(() => FRIDAY_QUIPS[Math.floor(Math.random() * FRIDAY_QUIPS.length)])
+  const [countdown, setCountdown] = useState(DISMISS_SECS)
+  const timestamp = useRef(new Date().toISOString().replace('T', ' ').slice(0, 19)).current
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setCountdown(c => {
+        if (c <= 1) { onDismiss(); return 0 }
+        return c - 1
+      })
+    }, 1000)
+    return () => clearInterval(t)
+  }, [onDismiss])
 
   return (
-    <div className="friday-diagnostic" role="alert">
-      {/* Corner brackets */}
-      <span className="fd-corner fd-tl" aria-hidden="true"/>
-      <span className="fd-corner fd-tr" aria-hidden="true"/>
-      <span className="fd-corner fd-bl" aria-hidden="true"/>
-      <span className="fd-corner fd-br" aria-hidden="true"/>
+    <div className="friday-overlay" role="alertdialog" aria-modal="true" aria-label="FRIDAY transmission error">
+      {/* Full-height scanline */}
+      <div className="fo-scanline" aria-hidden="true" />
 
-      {/* Scanline sweep */}
-      <div className="fd-scanline" aria-hidden="true"/>
-
-      {/* Header row */}
-      <div className="fd-header">
-        <span className="fd-label">F·R·I·D·A·Y&nbsp;DIAGNOSTIC</span>
-        <span className="fd-dot" aria-hidden="true"/>
-        <span className="fd-status">ERR_TRANSMISSION_FAILURE</span>
+      {/* Rotating reactor watermark */}
+      <div className="fo-reactor-bg" aria-hidden="true">
+        <svg viewBox="0 0 300 300" fill="none">
+          <g stroke="var(--energy)">
+            <circle cx="150" cy="150" r="130" strokeWidth="0.7" opacity="0.12"/>
+            <polygon points="150,20 263,85 263,215 150,280 37,215 37,85" strokeWidth="0.7" opacity="0.18"/>
+            <polygon points="150,58 228,103 228,197 150,242 72,197 72,103" strokeWidth="0.5" opacity="0.14"/>
+            <circle cx="150" cy="150" r="55" strokeWidth="0.7" opacity="0.18"/>
+            <polygon points="150,98 193,122 193,178 150,202 107,178 107,122" strokeWidth="0.6" opacity="0.15"/>
+            <circle cx="150" cy="150" r="20" strokeWidth="0.7" opacity="0.22"/>
+            <circle cx="150" cy="150" r="6" fill="var(--energy)" strokeWidth="0" opacity="0.20"/>
+          </g>
+        </svg>
       </div>
 
-      {/* Error detail */}
-      <div className="fd-body">
-        <div className="fd-row">
-          <span className="fd-key">TIMESTAMP</span>
-          <span className="fd-val">{timestamp} UTC</span>
-        </div>
-        <div className="fd-row">
-          <span className="fd-key">CHANNEL</span>
-          <span className="fd-val">EmailJS / {process.env.REACT_APP_EMAILJS_SERVICE_ID || 'myriad_emails'}</span>
-        </div>
-        <div className="fd-row fd-error-row">
-          <span className="fd-key">DETAIL</span>
-          <span className="fd-val fd-val--error">{error}</span>
-        </div>
-      </div>
+      {/* Main panel */}
+      <div className="fo-panel">
+        {/* Corner brackets */}
+        <span className="fo-corner fo-tl" aria-hidden="true" />
+        <span className="fo-corner fo-tr" aria-hidden="true" />
+        <span className="fo-corner fo-bl" aria-hidden="true" />
+        <span className="fo-corner fo-br" aria-hidden="true" />
 
-      {/* Quip */}
-      <blockquote className="fd-quip">
-        <p>{quip.line}</p>
-        <cite>{quip.attr}</cite>
-      </blockquote>
+        {/* Header */}
+        <div className="fo-header">
+          <span className="fo-warn" aria-hidden="true">⚠</span>
+          <span className="fo-title">F·R·I·D·A·Y&nbsp;&nbsp;DIAGNOSTIC</span>
+          <span className="fo-dot" aria-hidden="true" />
+          <span className="fo-status">ERR_TRANSMISSION_FAILURE</span>
+        </div>
 
-      {/* Actions */}
-      <div className="fd-actions">
-        <button className="fd-btn fd-btn--retry" onClick={onRetry}>↺&nbsp;RETRY</button>
-        <button className="fd-btn fd-btn--dismiss" onClick={onDismiss}>✕&nbsp;DISMISS</button>
+        <div className="fo-rule" aria-hidden="true" />
+
+        {/* Data table */}
+        <div className="fo-body">
+          <div className="fo-row">
+            <span className="fo-key">TIMESTAMP</span>
+            <span className="fo-val">{timestamp} UTC</span>
+          </div>
+          <div className="fo-row">
+            <span className="fo-key">CHANNEL</span>
+            <span className="fo-val">EmailJS / {process.env.REACT_APP_EMAILJS_SERVICE_ID || 'myriad_emails'}</span>
+          </div>
+          <div className="fo-row fo-row--fault">
+            <span className="fo-key">FAULT</span>
+            <span className="fo-val fo-val--error">{error}</span>
+          </div>
+        </div>
+
+        {/* Quip */}
+        <blockquote className="fo-quip">
+          <p>{quip.line}</p>
+          <cite>{quip.attr}</cite>
+        </blockquote>
+
+        {/* Countdown */}
+        <div className="fo-countdown">
+          <div className="fo-cd-track">
+            <div className="fo-cd-fill" style={{ animationDuration: `${DISMISS_SECS}s` }} />
+          </div>
+          <span className="fo-cd-label">AUTO-DISMISS IN {countdown}s</span>
+        </div>
+
+        {/* Actions */}
+        <div className="fo-actions">
+          <button className="fo-btn fo-btn--retry" onClick={onRetry}>↺&nbsp;RETRY TRANSMISSION</button>
+          <button className="fo-btn fo-btn--dismiss" onClick={onDismiss}>✕&nbsp;CLOSE DIAGNOSTIC</button>
+        </div>
       </div>
     </div>
   )
@@ -220,13 +262,6 @@ const Contact = () => {
                 </li>
               </ul>
             </form>
-            {sendError && (
-              <FRIDAYDiagnostic
-                error={sendError}
-                onRetry={() => { setSendError(null); refForm.current?.requestSubmit() }}
-                onDismiss={() => setSendError(null)}
-              />
-            )}
           </div>
         </div>
 
@@ -289,6 +324,13 @@ const Contact = () => {
       </Backdrop>
 
       {sent && <JARVISScreen onClose={() => setSent(false)} />}
+      {sendError && (
+        <FRIDAYOverlay
+          error={sendError}
+          onRetry={() => { setSendError(null); refForm.current?.requestSubmit() }}
+          onDismiss={() => setSendError(null)}
+        />
+      )}
     </>
   )
 }
