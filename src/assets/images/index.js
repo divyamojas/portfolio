@@ -1,8 +1,4 @@
-import mm from './mondaymorning-snapshot.png'
-import todoozzz from './todoozzz-snapshot.png'
-import fundraiserr from './fundraiserr-snapshot.png'
-// import mm from './mondaymorning.png'
-// import mm from './mondaymorning.png'
-// import mm from './mondaymorning.png'
+import logo from './D-logo-32px.svg'
 
-export { mm, todoozzz, fundraiserr }
+export { logo }
+
