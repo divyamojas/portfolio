@@ -1,14 +1,4 @@
-$primary-color: #ffd700;
-
 @import 'animate.css';
-@import '~loaders.css/src/animations/pacman.scss';
-
-@font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neu.ttf') format('ttf');
-  font-weight: normal;
-  font-style: normal;
-}
 
 @font-face {
   font-family: 'La Belle Aurore';
@@ -28,23 +18,92 @@ $primary-color: #ffd700;
 
 input,
 textarea {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
+/* Page-transition loader — shared show/hide transitions */
 .loader-hidden {
-  display: none;
+  display: block !important;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  z-index: 999;
 }
 
 .loader-active {
   display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  animation: fadeOut 1s 1s;
-  animation-fill-mode: forwards;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 999;
+  opacity: 1;
+  transition: opacity 0.15s ease-in, transform 0.15s ease-out;
+}
+
+/* ── Arc-reactor loader ─────────────────────────────────────────── */
+.arc-loader {
+  svg {
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.60));
+  }
+
+  /* Outer ring + hex ring: spins CW */
+  .al-outer {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: alSpinCW 3s linear infinite;
+  }
+
+  /* Inner triangle + small circle: spins CCW */
+  .al-inner {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: alSpinCCW 2s linear infinite;
+  }
+
+  /* Pulse ring: expands & fades out from center */
+  .al-pulse {
+    fill: none;
+    stroke: var(--arc);
+    stroke-width: 1.5;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: alPulseOut 1.4s ease-out infinite;
+  }
+
+  /* Core dot: throbs */
+  .al-core {
+    fill: var(--arc);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: alCorePulse 0.9s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes alSpinCW    { to { transform: rotate(360deg);  } }
+@keyframes alSpinCCW   { to { transform: rotate(-360deg); } }
+
+@keyframes alPulseOut {
+  0%   { transform: scale(0.16); opacity: 0.9; }
+  100% { transform: scale(1);    opacity: 0;   }
+}
+
+@keyframes alCorePulse {
+  from { transform: scale(0.7); opacity: 0.7; }
+  to   { transform: scale(1.3); opacity: 1;   }
+}
+
+/* Respect user motion preferences — collapse all animations/transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

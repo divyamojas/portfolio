@@ -1,17 +1,95 @@
-*{
+:root {
+  /* dark – Iron Man Armory */
+  --bg:             #080c14;
+  --bg-surface:     #0d1420;
+  --bg-card:        #111927;
+  --text-primary:   #e8edf5;
+  --text-secondary: #7a8aa0;
+  --text-muted:     #3d4d60;
+  --accent:         #f59e0b;
+  --accent-hover:   #fbbf24;
+  /* --purple maps to Dr. Strange teal throughout all inherited SCSS */
+  --purple:         #0891b2;
+  --purple-subtle:  rgba(8, 145, 178, 0.10);
+  --purple-border:  rgba(8, 145, 178, 0.22);
+  --nav-icon:       #3d4d60;
+  --border:         rgba(232, 237, 245, 0.10);
+  --glow:           rgba(245, 158, 11, 0.08);
+  /* Iron Man / arc-reactor extras */
+  --arc:            #06b6d4;
+  --energy:         #dc2626;
+}
+
+[data-theme="light"] {
+  /* light – Sanctum Sanctorum */
+  --bg:             #f0f4f8;
+  --bg-surface:     #e4eaf2;
+  --bg-card:        #ffffff;
+  --text-primary:   #0d1520;
+  --text-secondary: #4a5a70;
+  --text-muted:     #8090a8;
+  --accent:         #d97706;
+  --accent-hover:   #f59e0b;
+  --purple:         #0e7490;
+  --purple-subtle:  rgba(14, 116, 144, 0.09);
+  --purple-border:  rgba(14, 116, 144, 0.22);
+  --nav-icon:       #8090a8;
+  --border:         rgba(13, 21, 32, 0.12);
+  --glow:           rgba(217, 119, 6, 0.10);
+  --arc:            #0891b2;
+  --energy:         #b91c1c;
+}
+
+/* radial reveal for view transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) { z-index: 1; }
+::view-transition-old(root) { z-index: -1; }
+
+* {
+  box-sizing: border-box;
+}
+
+/* UI chrome: drag-selecting icons/nav is jarring — keep it off */
+button, nav, svg, .nav-bar, .hud-corner-decor, .tags, .logo,
+.mnd-svg, .mnd-tile, .mnd-card, .arc-loader, .theme-toggle {
   user-select: none;
 }
+
+/* Content areas: always selectable */
+p, li, h1, h2, h3, h4, span, a, label, blockquote {
+  user-select: text;
+}
+
+input, textarea {
+  user-select: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 html {
-    font-size: 62.5%;
-  }
-  
-  body {
-    margin: 0;
-    font: 300 11px/1.4 'Helvetica Neue', sans-serif;
-    color: #444;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background: #000;
-    display: block;
-  }
-  
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text-primary);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+}
