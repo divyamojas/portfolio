@@ -1,93 +1,261 @@
 .home-page {
+  position: relative;
+  /* Prevent mandala wrapping below text at narrower viewports / high zoom */
+  flex-wrap: nowrap !important;
+  gap: 16px;
+  align-items: center;
+
   .text-zone {
     max-height: 90%;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
   }
+
   .intro-text {
     position: relative;
+
     h1 {
       margin-top: 2vh;
-
-      color: #fff;
+      color: var(--text-primary);
       font-size: 53px;
-      font-family: 'Coolvetica';
-      font-weight: 400;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+
       &::before {
         content: '<h1>';
         font-family: 'La Belle Aurore';
-        color: #ffd700;
+        color: var(--accent);
         font-size: 18px;
         position: absolute;
         top: -10px;
-        opacity: 0.6;
+        opacity: 0.5;
         left: -36px;
+        font-style: normal;
       }
+
       &::after {
         content: '</h1>';
         font-family: 'La Belle Aurore';
-        color: #ffd700;
+        color: var(--accent);
         font-size: 18px;
         position: absolute;
         left: -32px;
-        opacity: 0.6;
+        opacity: 0.5;
         animation: fadeIn 1s 1.7s backwards;
         bottom: -16px;
+        font-style: normal;
       }
 
-      img {
-        width: 36px;
-        margin-left: 20px;
-        margin-right: 4px;
+      .d-initial {
+        color: var(--accent);
         opacity: 0;
-        height: auto;
         animation: rotateIn 1s linear both;
         animation-delay: 1.4s;
+        position: relative;
+
+        /* Tiny arc-reactor glow thread from the D */
+        &::after {
+          content: '';
+          position: absolute;
+          top: -8px;
+          left: 50%;
+          width: 1px;
+          height: 12px;
+          background: linear-gradient(to bottom, transparent, var(--arc));
+          opacity: 0.35;
+          transform: translateX(-50%);
+          animation: fadeIn 0.5s ease 2.2s both;
+        }
       }
     }
   }
-  h2 {
-    color: #8d8d8d;
-    margin-top: 20px;
-    font-weight: 400;
-    font-size: 11px;
-    font-family: sans-serif;
-    letter-spacing: 3px;
+
+  .cta-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 25px;
     animation: fadeIn 1s 1.8s backwards;
   }
 
   .flat-button {
-    color: #ffd700;
-    margin-top: 13px;
-    font-weight: 400;
+    color: var(--accent);
+    font-weight: 500;
     letter-spacing: 4px;
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
     text-decoration: none;
     padding: 10px 18px;
-    border: 1px solid #ffd700;
-    margin-top: 25px;
-    float: left;
-    animation: fadeIn 1s 1.8s backwards;
+    border: 1px solid var(--accent);
     white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
 
     &:hover {
-      background: #ffd700;
-      color: #333;
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    &.secondary {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+
+      &:hover {
+        background: var(--purple-subtle);
+        color: var(--purple);
+        border-color: var(--purple);
+      }
     }
   }
 }
 
+/* ── Dr. Strange Mandala ────────────────────────────────────────── */
+
+.home-mandala {
+  position: relative;
+  /* Shrinks gracefully: 200px floor, 34vw natural, 320px max */
+  width: clamp(200px, 34vw, 320px);
+  height: clamp(200px, 34vw, 320px);
+  flex-shrink: 1;
+  align-self: center;
+}
+
+.mnd-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.52;
+}
+
+/* Outer layer: spokes + outer polygon — spins CW */
+.mnd-outer {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mndSpinCW 90s linear infinite;
+}
+
+/* Inner layer: mid/inner polygons + eye rings — spins CCW */
+.mnd-inner {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mndSpinCCW 60s linear infinite;
+}
+
+@keyframes mndSpinCW  { to { transform: rotate(360deg);  } }
+@keyframes mndSpinCCW { to { transform: rotate(-360deg); } }
+
+/* Tile wrapper — absolute pos + idle bob */
+.mnd-tile {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  animation: mndBob 3.4s ease-in-out infinite alternate;
+  cursor: pointer;
+  z-index: 1;
+
+  &:hover .mnd-card {
+    animation: mndPendulum 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    box-shadow:
+      0 0 28px rgba(6, 182, 212, 0.45),
+      inset 0 0 14px rgba(6, 182, 212, 0.16);
+    border-color: rgba(6, 182, 212, 0.40);
+  }
+
+  &:hover .mnd-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icon badge */
+.mnd-card {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border-radius: 11px;
+  background: rgba(8, 12, 20, 0.90);
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  box-shadow:
+    0 0 18px rgba(245, 158, 11, 0.14),
+    inset 0 0 10px rgba(245, 158, 11, 0.05);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  transform-origin: var(--origin, 50% 0%);
+
+  img { height: 27px; width: auto; display: block; }
+}
+
+/* Tech name — slides up on hover */
+.mnd-label {
+  font-size: 9px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
+}
+
+@keyframes mndBob {
+  from { transform: translate(-50%, -50%) translateY(-5px); }
+  to   { transform: translate(-50%, -50%) translateY(5px);  }
+}
+
+@keyframes mndPendulum {
+  0%   { transform: rotate(0deg)   scale(1.00); }
+  16%  { transform: rotate(-11deg) scale(1.08); }
+  38%  { transform: rotate(8deg)   scale(1.04); }
+  58%  { transform: rotate(-5deg)  scale(1.01); }
+  76%  { transform: rotate(3deg)   scale(1.00); }
+  90%  { transform: rotate(-1deg)  scale(1.00); }
+  100% { transform: rotate(0deg)   scale(1.00); }
+}
+
+/* Light mode adjustments */
+[data-theme="light"] {
+  .mnd-svg { opacity: 0.38; }
+
+  .mnd-card {
+    background: rgba(240, 244, 248, 0.93);
+    border-color: rgba(192, 120, 32, 0.24);
+    box-shadow:
+      0 0 18px rgba(192, 120, 32, 0.12),
+      inset 0 0 10px rgba(192, 120, 32, 0.05);
+  }
+
+  .mnd-tile:hover .mnd-card {
+    box-shadow:
+      0 0 28px rgba(8, 145, 178, 0.28),
+      inset 0 0 14px rgba(8, 145, 178, 0.10);
+    border-color: rgba(8, 145, 178, 0.32);
+  }
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────── */
 @media screen and (max-width: 480px) {
+  .home-mandala { display: none; }
+
   .home-page {
-    .intro-text {
-      h1 {
-        font-size: 32px;
-        &::before {
-          left: 6px;
-          top: -14px;
-        }
-        &::after {
-          left: 4px;
-          bottom: -20px;
-        }
+    .intro-text h1 {
+      font-size: 32px;
+
+      &::before {
+        left: 6px;
+        top: -14px;
+      }
+
+      &::after {
+        left: 4px;
+        bottom: -20px;
       }
     }
   }
