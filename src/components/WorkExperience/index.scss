@@ -1,0 +1,293 @@
+.experience-page {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-bottom: 40px;
+
+  .exp-title {
+    width: 100%;
+    padding-left: 5vw;
+
+    h1 {
+      font-size: 52px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 40px;
+      position: relative;
+      left: 10px;
+
+      &::before {
+        content: '<h1>';
+        font-family: 'La Belle Aurore';
+        font-size: 18px;
+        position: absolute;
+        margin-top: -10px;
+        left: -10px;
+        opacity: 0.5;
+        line-height: 18px;
+        font-style: normal;
+      }
+
+      &::after {
+        content: '</h1>';
+        font-family: 'La Belle Aurore';
+        font-size: 18px;
+        line-height: 18px;
+        position: absolute;
+        bottom: -10px;
+        left: -30px;
+        margin-left: 20px;
+        opacity: 0.5;
+        font-style: normal;
+      }
+    }
+  }
+
+  .experience-timeline {
+    width: 100%;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    box-sizing: border-box;
+  }
+
+  .experience-card {
+    border-left: 2px solid var(--accent);
+    padding-left: 28px;
+    margin-bottom: 40px;
+    animation: fadeInUp 1s 1.2s both;
+
+    .exp-header {
+      margin-bottom: 16px;
+    }
+
+    .exp-company {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .exp-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+
+      span {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+      }
+
+      .exp-role {
+        color: var(--purple);
+        font-weight: 600;
+      }
+
+      .exp-subrole {
+        color: var(--text-muted);
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      .exp-period,
+      .exp-location {
+        color: var(--text-secondary);
+      }
+    }
+
+    .exp-points {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: var(--text-primary);
+        font-size: 13px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 300;
+        line-height: 1.8;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        animation: fadeInUp 0.5s both;
+
+        /* Arc-reactor triangle bullet */
+        &::before {
+          content: '';
+          display: block;
+          width: 7px;
+          height: 8px;
+          min-width: 7px;
+          background: var(--arc);
+          clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+          margin-top: 7px;
+          flex-shrink: 0;
+          opacity: 0.85;
+        }
+
+        &:nth-child(1) { animation-delay: 1.3s; }
+        &:nth-child(2) { animation-delay: 1.4s; }
+        &:nth-child(3) { animation-delay: 1.5s; }
+        &:nth-child(4) { animation-delay: 1.6s; }
+        &:nth-child(5) { animation-delay: 1.7s; }
+        &:nth-child(6) { animation-delay: 1.8s; }
+      }
+    }
+  }
+}
+
+/* ── Skills & Tools ─────────────────────────────────────────────── */
+.exp-section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-left: 5vw;
+  margin-bottom: 18px;
+  margin-top: 8px;
+
+  .section-icon {
+    color: var(--arc);
+    font-size: 14px;
+    opacity: 0.8;
+  }
+}
+
+.skills-grid {
+  width: 100%;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s 1.4s both;
+
+  .skill-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    .skill-group-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      width: 100px;
+      flex-shrink: 0;
+      padding-top: 5px;
+    }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-chip {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s ease, color 0.2s ease;
+
+      &:hover {
+        color: var(--arc);
+        border-color: var(--arc);
+      }
+    }
+  }
+}
+
+/* ── Leadership ──────────────────────────────────────────────────── */
+.leadership-grid {
+  width: 100%;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s 1.6s both;
+
+  .leadership-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.2s ease;
+
+    &:hover { border-color: var(--purple-border); }
+
+    .lc-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .lc-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--purple);
+      font-weight: 500;
+    }
+
+    .lc-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.7;
+      margin: 4px 0 0;
+    }
+  }
+}
+
+.edu-card { animation-delay: 1.5s !important; }
+
+@media screen and (max-width: 480px) {
+  .experience-page {
+    .exp-title {
+      padding-left: 8vw;
+      h1 { font-size: 40px; }
+    }
+
+    .experience-timeline,
+    .skills-grid,
+    .leadership-grid {
+      padding-left: 6vw;
+      padding-right: 4vw;
+    }
+
+    .experience-card { padding-left: 16px; }
+    .experience-card .exp-company { font-size: 18px; }
+
+    .skills-grid .skill-group { flex-direction: column; gap: 8px; }
+    .skill-group-name { width: auto !important; }
+
+    .leadership-grid { grid-template-columns: 1fr; }
+
+    .exp-section-label { padding-left: 6vw; }
+  }
+}
