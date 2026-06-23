@@ -1,107 +1,294 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Loader from 'react-loaders'
 import emailjs from '@emailjs/browser'
-
-import './index.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { Backdrop } from '@mui/material'
 import AnimatedLetters from '../AnimatedLetters'
-import { Backdrop, CircularProgress } from '@mui/material'
+import useTitle from '../../hooks/useTitle'
+import './index.scss'
+
+/* Arc Reactor SVG — used in the JARVIS success overlay */
+const ReactorSVG = () => (
+  <svg viewBox="0 0 120 120" className="reactor-svg" aria-hidden="true">
+    <g className="jr-outer">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--arc)" strokeWidth="1.5" opacity="0.5"/>
+      {/* 8 fins */}
+      <line x1="106" y1="60"   x2="112" y2="60"   stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="92.7" y1="92.7" x2="96.9" y2="96.9" stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="60"  y1="106"  x2="60"  y2="112"  stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="27.3" y1="92.7" x2="23.1" y2="96.9" stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="14"  y1="60"   x2="8"   y2="60"   stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="27.3" y1="27.3" x2="23.1" y2="23.1" stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="60"  y1="14"   x2="60"  y2="8"    stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="92.7" y1="27.3" x2="96.9" y2="23.1" stroke="var(--arc)" strokeWidth="2" strokeLinecap="round"/>
+      {/* Hex ring r=38 */}
+      <polygon points="98,60 79,92.9 41,92.9 22,60 41,27.1 79,27.1"
+        fill="none" stroke="var(--arc)" strokeWidth="1.2" strokeLinejoin="round" opacity="0.40"/>
+    </g>
+    <g className="jr-inner">
+      {/* Triangle pointing up, r=20 */}
+      <polygon points="60,40 77.3,70 42.7,70"
+        fill="none" stroke="var(--arc)" strokeWidth="1.5" strokeLinejoin="round"/>
+      <circle cx="60" cy="60" r="12" fill="none" stroke="var(--arc)" strokeWidth="1.2" opacity="0.8"/>
+      <circle cx="60" cy="60" r="7"  fill="none" stroke="var(--arc)" strokeWidth="0.8" opacity="0.6"/>
+    </g>
+    <circle cx="60" cy="60" r="52" fill="none" stroke="var(--arc)" strokeWidth="1.5" className="jr-pulse"/>
+    <circle cx="60" cy="60" r="5" fill="var(--arc)" className="jr-core"/>
+  </svg>
+)
+
+/* Iron Man HUD corner bracket for the JARVIS overlay */
+const HUDCorner = ({ className }) => (
+  <svg className={`jarvis-corner ${className}`} viewBox="0 0 60 60" aria-hidden="true">
+    <g stroke="var(--arc)" fill="none">
+      <polyline points="0,25 0,0 25,0" strokeWidth="1.5"/>
+      <polyline points="6,20 6,6 20,6" strokeWidth="1" opacity="0.6"/>
+      <rect x="0" y="0" width="4" height="4" fill="var(--arc)" strokeWidth="0"/>
+    </g>
+  </svg>
+)
+
+const JARVISScreen = ({ onClose }) => {
+  useEffect(() => {
+    const t = setTimeout(onClose, 8000)
+    return () => clearTimeout(t)
+  }, [onClose])
+
+  return (
+    <div className="jarvis-overlay" onClick={onClose}>
+      {/* HUD hex grid texture */}
+      <div className="jarvis-hex-bg" aria-hidden="true"/>
+
+      {/* HUD corner brackets */}
+      <HUDCorner className="jarvis-corner--tl" />
+      <HUDCorner className="jarvis-corner--tr" />
+      <HUDCorner className="jarvis-corner--bl" />
+      <HUDCorner className="jarvis-corner--br" />
+
+      {/* Arc reactor in centre */}
+      <div className="jarvis-reactor">
+        <ReactorSVG />
+      </div>
+
+      {/* Protocol label */}
+      <p className="jarvis-protocol">F·R·I·D·A·Y&nbsp;&nbsp;PROTOCOL</p>
+
+      {/* Message */}
+      <div className="jarvis-content">
+        <p className="jarvis-tagline">tony stark's personal ai, at your service</p>
+        <h2 className="jarvis-heading">Transmission Received.</h2>
+        <p className="jarvis-sub">I'll have him get back to you — once he's done tinkering.</p>
+        <p className="jarvis-dismiss">tap anywhere to dismiss</p>
+      </div>
+    </div>
+  )
+}
+
+/* FRIDAY error quips — because plain red boxes are beneath us */
+const FRIDAY_QUIPS = [
+  { line: '"Yeah, the antenna's definitely fried."', attr: '— T. Stark, probably' },
+  { line: '"I\'ve run seventeen diagnostics. The issue isn\'t on our end."', attr: '— FRIDAY, logging it anyway' },
+  { line: '"Have you tried turning it off and on again?" "That\'s not how arc reactors work." "Same principle."', attr: '— FRIDAY & Tony, 2014' },
+  { line: '"The Sanctum\'s wards are blocking the signal. Or EmailJS is down. Hard to say."', attr: '— Dr. Strange, unhelpfully' },
+]
+
+const FRIDAYDiagnostic = ({ error, onRetry, onDismiss }) => {
+  const quip = FRIDAY_QUIPS[Math.floor(Math.random() * FRIDAY_QUIPS.length)]
+  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19)
+
+  return (
+    <div className="friday-diagnostic" role="alert">
+      {/* Corner brackets */}
+      <span className="fd-corner fd-tl" aria-hidden="true"/>
+      <span className="fd-corner fd-tr" aria-hidden="true"/>
+      <span className="fd-corner fd-bl" aria-hidden="true"/>
+      <span className="fd-corner fd-br" aria-hidden="true"/>
+
+      {/* Scanline sweep */}
+      <div className="fd-scanline" aria-hidden="true"/>
+
+      {/* Header row */}
+      <div className="fd-header">
+        <span className="fd-label">F·R·I·D·A·Y&nbsp;DIAGNOSTIC</span>
+        <span className="fd-dot" aria-hidden="true"/>
+        <span className="fd-status">ERR_TRANSMISSION_FAILURE</span>
+      </div>
+
+      {/* Error detail */}
+      <div className="fd-body">
+        <div className="fd-row">
+          <span className="fd-key">TIMESTAMP</span>
+          <span className="fd-val">{timestamp} UTC</span>
+        </div>
+        <div className="fd-row">
+          <span className="fd-key">CHANNEL</span>
+          <span className="fd-val">EmailJS / {process.env.REACT_APP_EMAILJS_SERVICE_ID || 'myriad_emails'}</span>
+        </div>
+        <div className="fd-row fd-error-row">
+          <span className="fd-key">DETAIL</span>
+          <span className="fd-val fd-val--error">{error}</span>
+        </div>
+      </div>
+
+      {/* Quip */}
+      <blockquote className="fd-quip">
+        <p>{quip.line}</p>
+        <cite>{quip.attr}</cite>
+      </blockquote>
+
+      {/* Actions */}
+      <div className="fd-actions">
+        <button className="fd-btn fd-btn--retry" onClick={onRetry}>↺&nbsp;RETRY</button>
+        <button className="fd-btn fd-btn--dismiss" onClick={onDismiss}>✕&nbsp;DISMISS</button>
+      </div>
+    </div>
+  )
+}
 
 const Contact = () => {
+  useTitle('Contact')
   const [letterClass, setLetterClass] = useState('text-animate')
-  const [open, setOpen] = React.useState(false)
-
+  const [loading, setLoading] = React.useState(false)
+  const [sent, setSent] = React.useState(false)
+  const [sendError, setSendError] = React.useState(null)
   const refForm = useRef()
+
   useEffect(() => {
-    setTimeout(() => {
-      setLetterClass('text-animate-hover')
-    }, 3000)
+    const timer = setTimeout(() => setLetterClass('text-animate-hover'), 3000)
+    return () => clearTimeout(timer)
   }, [])
 
   const sendEmail = (e) => {
     e.preventDefault()
-    setOpen(true)
-
+    setLoading(true)
+    setSendError(null)
     emailjs
       .sendForm(
-        'myriad_emails',
-        'portfolio',
+        process.env.REACT_APP_EMAILJS_SERVICE_ID  || 'myriad_emails',
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'portfolio',
         refForm.current,
-        'wWU_Kle6cWQFmDvGm'
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY  || 'wWU_Kle6cWQFmDvGm'
       )
       .then(
         () => {
-          alert('Message Successfully sent!')
-          window.location.reload(false)
-          setOpen(false)
+          setLoading(false)
+          setSent(true)
+          refForm.current.reset()
         },
-        (e) => {
-          setOpen(false)
-          console.log(e)
-          alert('Failed to send the message, please try again!')
+        (err) => {
+          setLoading(false)
+          const detail = err?.text || err?.message || `status ${err?.status}` || JSON.stringify(err)
+          setSendError(detail)
+          console.error('[EmailJS]', err)
         }
       )
   }
+
   return (
     <>
       <div className="container contact-page">
         <div className="text-zone">
           <h1>
             <AnimatedLetters
-              strArray={("Contact me!").split("")}
+              strArray={'Contact me'.split('')}
               idx={15}
               letterClass={letterClass}
             />
           </h1>
           <p>
-            Thanks for stopping by! If you have a question, comment, or just
-            want to say hi, then drop me a line. I'm always excited to chat
-            about technology and the amazing things we can create with it.
+            Open a channel. Whether it's a question, a collab idea, or just
+            wanting to geek out about something — FRIDAY's listening.
           </p>
           <div className="contact-form">
             <form onSubmit={sendEmail} ref={refForm}>
               <ul>
                 <li className="half">
-                  <input type="text" name="name" placeholder="Name" required />
+                  <input type="text" name="name" placeholder="Your alias" required />
                 </li>
                 <li className="half">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                  />
+                  <input type="email" name="email" placeholder="Secure comms channel" required />
                 </li>
                 <li>
-                  <input
-                    type="text"
-                    name="subject"
-                    placeholder="Subject"
-                    required
-                  />
+                  <input type="text" name="subject" placeholder="Mission brief" required />
                 </li>
                 <li>
-                  <textarea
-                    placeholder="Message"
-                    name="message"
-                    required
-                  ></textarea>
+                  <textarea placeholder="Your intel" name="message" required />
                 </li>
                 <li>
-                  <input type="submit" className="flat-button" value="SEND" />
+                  <input type="submit" className="flat-button" value="TRANSMIT" />
                 </li>
               </ul>
             </form>
+            {sendError && (
+              <FRIDAYDiagnostic
+                error={sendError}
+                onRetry={() => { setSendError(null); refForm.current?.requestSubmit() }}
+                onDismiss={() => setSendError(null)}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="contact-info">
+          <p className="connect-label">or open a direct channel</p>
+          <div className="contact-items">
+            <a href="https://www.linkedin.com/in/divyamojas/" target="_blank" rel="noreferrer" className="contact-item">
+              <div className="item-icon"><FontAwesomeIcon icon={faLinkedin} /></div>
+              <div className="item-text">
+                <span className="item-label">LinkedIn</span>
+                <span className="item-value">divyamojas</span>
+              </div>
+            </a>
+            <a href="https://github.com/divyamojas" target="_blank" rel="noreferrer" className="contact-item">
+              <div className="item-icon"><FontAwesomeIcon icon={faGithub} /></div>
+              <div className="item-text">
+                <span className="item-label">GitHub</span>
+                <span className="item-value">divyamojas</span>
+              </div>
+            </a>
+            <div className="contact-item static">
+              <div className="item-icon"><FontAwesomeIcon icon={faLocationDot} /></div>
+              <div className="item-text">
+                <span className="item-label">Location</span>
+                <span className="item-value">Remote, India</span>
+              </div>
+            </div>
+          </div>
+          <div className="availability">
+            <span className="availability-dot" />
+            Open to new opportunities
           </div>
         </div>
       </div>
-      <Loader type="pacman" />
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-      >
-        {/* <Loader type="pacman" /> */}
-        <CircularProgress color="inherit" />
+
+      {/* Arc reactor loading backdrop */}
+      <Backdrop sx={{ background: 'rgba(8,12,20,0.80)', backdropFilter: 'blur(8px)', zIndex: 1400 }} open={loading}>
+        <div className="arc-loader loader-active" style={{ position: 'static', transform: 'none', opacity: 1, transition: 'none' }}>
+          <svg viewBox="0 0 60 60" width="64" height="64" aria-hidden="true">
+            <g className="al-outer">
+              <circle cx="30" cy="30" r="26" fill="none" stroke="var(--arc)" strokeWidth="0.8" opacity="0.55"/>
+              <line x1="51" y1="30" x2="56" y2="30" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="44.85" y1="44.85" x2="48.38" y2="48.38" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="30" y1="51" x2="30" y2="56" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="15.15" y1="44.85" x2="11.62" y2="48.38" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="9" y1="30" x2="4" y2="30" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="15.15" y1="15.15" x2="11.62" y2="11.62" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="30" y1="9" x2="30" y2="4" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <line x1="44.85" y1="15.15" x2="48.38" y2="11.62" stroke="var(--arc)" strokeWidth="1.2" strokeLinecap="round" opacity="0.65"/>
+              <polygon points="30,14 43.8,22 43.8,38 30,46 16.2,38 16.2,22" fill="none" stroke="var(--arc)" strokeWidth="0.9" strokeLinejoin="round" opacity="0.55"/>
+            </g>
+            <g className="al-inner">
+              <polygon points="30,20 38.66,35 21.34,35" fill="none" stroke="var(--arc)" strokeWidth="1.1" strokeLinejoin="round"/>
+              <circle cx="30" cy="30" r="6" fill="none" stroke="var(--arc)" strokeWidth="0.9" opacity="0.75"/>
+            </g>
+            <circle cx="30" cy="30" r="26" className="al-pulse"/>
+            <circle cx="30" cy="30" r="3.5" className="al-core"/>
+          </svg>
+        </div>
       </Backdrop>
+
+      {sent && <JARVISScreen onClose={() => setSent(false)} />}
     </>
   )
 }

@@ -1,0 +1,90 @@
+.notfound-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  flex-wrap: wrap;
+
+  .nf-content {
+    .nf-code {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      letter-spacing: 12px;
+      color: var(--energy);
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      animation: fadeIn 0.8s 1s both;
+    }
+
+    .nf-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 20px;
+      animation: fadeInUp 0.8s 1.1s both;
+    }
+
+    .nf-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.8;
+      margin: 0 0 36px;
+      animation: fadeInUp 0.8s 1.2s both;
+    }
+
+    .nf-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--accent);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      padding: 10px 22px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      transition: background 0.2s ease, color 0.2s ease;
+      animation: fadeIn 0.8s 1.4s both;
+
+      &:hover {
+        background: var(--accent);
+        color: var(--bg);
+      }
+    }
+  }
+
+  .nf-reactor {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 14px var(--energy));
+    animation: fadeIn 1s 1.2s both;
+
+    svg { width: 100%; height: 100%; }
+
+    .nf-outer { animation: alSpinCW 12s linear infinite; transform-origin: 60px 60px; }
+    .nf-inner { animation: alSpinCCW 7s linear infinite; transform-origin: 60px 60px; }
+    .nf-pulse {
+      opacity: 0;
+      animation: alPulseOut 2.2s ease-out infinite;
+    }
+    .nf-core {
+      animation: alCorePulse 1.2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 5px var(--energy));
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .notfound-page {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+
+    .nf-content .nf-heading { font-size: 34px; }
+    .nf-reactor { width: 120px; height: 120px; }
+  }
+}
