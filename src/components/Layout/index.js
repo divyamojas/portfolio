@@ -109,7 +109,7 @@ const Layout = () => {
           <br />
           <span className="bottom-tag-html"> &lt;/html&gt;</span>
           <br />
-          <span className="bottom-thanks"> &#47;&#47; FRIDAY: session ends. Good work today.</span>
+          <span className="bottom-thanks"> &#47;&#47; FRIDAY: all systems nominal — standing by.</span>
         </span>
       </div>
       <ArcReactorLoader active={isLoading} />
